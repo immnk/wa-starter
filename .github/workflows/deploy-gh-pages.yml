@@ -2,8 +2,8 @@ name: Deploy to gh-pages
 
 on:
   push:
-    branches:
-      - master
+    tags:
+      - "*"
 
 jobs:
   gh-pages-deploy:
@@ -12,6 +12,18 @@ jobs:
     steps:
       - name: Checkout branch
         uses: actions/checkout@v2
+
+      - name: Archive Release
+        uses: thedoctor0/zip-release@master
+        with:
+          type: "zip"
+          filename: "release.zip"
+          exclusions: "*.git* /*node_modules/* .editorconfig"
+
+      - uses: ncipollo/release-action@v1
+        with:
+          artifacts: "release.zip"
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
