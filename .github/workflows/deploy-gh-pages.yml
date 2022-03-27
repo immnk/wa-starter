@@ -6,17 +6,15 @@ on:
       - master
 
 jobs:
-    gh-pages-deploy:
-      name: Deploying to gh-pages
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout branch
-          uses: actions/checkout@v2
+  gh-pages-deploy:
+    name: Deploying to gh-pages
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v2
 
-        - name: deploy
-          uses: peaceiris/actions-gh-pages@v3
-          with:
-           github_token: ${{ secrets.ACCESS_TOKEN }}
-           publish_dir: ./
-          env:
-           ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+      - name: deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.ACCESS_TOKEN }}
+          publish_dir: ./
