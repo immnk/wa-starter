@@ -34,35 +34,70 @@
     <meta name="theme-color" content="#fafafa" />
 
     <style>
+      :root {
+        --input-color: #99a3ba;
+        --input-border: #cdd9ed;
+        --input-background: #fff;
+        --input-placeholder: #cbd1dc;
+        --input-border-focus: #275efe;
+        --group-color: var(--input-color);
+        --group-border: var(--input-border);
+        --group-background: #eef4ff;
+        --group-color-focus: #fff;
+        --group-border-focus: var(--input-border-focus);
+        --group-background-focus: #678efe;
+      }
+
       * {
         box-sizing: border-box;
         font-family: "Open Sans", sans-serif;
       }
 
+      body {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        background: #f5f9ff;
+        margin: 0;
+      }
+
+      .form-group {
+        position: relative;
+        display: flex;
+        margin-right: 6px;
+      }
+
+      .form-field {
+        display: block;
+        width: 100%;
+        padding: 8px 16px;
+        line-height: 25px;
+        font-size: 14px;
+        font-weight: 500;
+        font-family: inherit;
+        border-radius: 6px;
+        -webkit-appearance: none;
+        color: var(--input-color);
+        border: 1px solid var(--input-border);
+        background: var(--input-background);
+        transition: border 0.3s ease;
+      }
+
+      .form-group input:first-child {
+        border-radius: 6px 0 0 6px;
+        width: 20%;
+      }
+
+      .form-group input:last-child {
+        border-radius: 0 6px 6px 0;
+      }
+
       .phoneNumber {
         display: flex;
         justify-content: center;
-        margin-top: 200px;
-      }
-
-      #countryCode,
-      #numberInput {
-        padding: 0.5em 0.25em;
-        border: none;
-        border-radius: 0.2em;
-        font-size: 1.5em;
-        text-align: center;
-        box-shadow: 0 0 1em 0.25em rgba(0, 0, 0, 0.2);
-      }
-
-      #countryCode {
-        width: 20%;
-        margin-right: 6px;
-      }
-
-      #numberInput {
-        width: 60%;
-        margin-right: 6px;
+        padding: 6px;
       }
 
       #pasteButton {
@@ -93,14 +128,26 @@
   </head>
 
   <body>
-    <section class="root">
-      <section class="phoneNumber">
-        <input type="tel" value="+91" id="countryCode" />
-        <input type="tel" class="input" id="numberInput" />
-        <button class="paste" id="pasteButton"></button>
-      </section>
-      <a href="https://wa.me/" disabled id="link"></a>
+    <section class="phoneNumber">
+      <div class="form-group">
+        <input
+          class="form-field"
+          type="tel"
+          value="+91"
+          id="countryCode"
+          placeholder="Country"
+        />
+        <input
+          class="form-field"
+          type="tel"
+          class="input"
+          id="numberInput"
+          placeholder="Phone Number"
+        />
+      </div>
+      <button class="paste" id="pasteButton"></button>
     </section>
+    <a href="https://wa.me/" disabled id="link"></a>
 
     <script>
       (function () {
