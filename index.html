@@ -13,6 +13,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="language" content="English" />
     <meta name="author" content="Manikanta Tankala" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <meta property="og:title" content="WA Link Generator" />
     <meta property="og:site_name" content="WA Generator" />
@@ -91,7 +92,7 @@
         <input type="tel" class="input" id="numberInput" />
         <button class="paste" id="pasteButton"></button>
       </section>
-      <a href="https://wa.me/917418271862" id="link">7418271862</a>
+      <a href="https://wa.me/" disabled id="link"></a>
     </section>
 
     <script>
@@ -105,6 +106,7 @@
           const phoneNumber = phoneNumberElement.value.replace(/\s+/g, "");
           const formattedNumber = `${LINK_PREFIX}${countryCode}${phoneNumber}`;
           link.setAttribute("href", formattedNumber);
+          link.setAttribute("disabled", false);
           link.innerText = formattedNumber;
         }
 
