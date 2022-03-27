@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>WA link generator</title>
+    <meta name="description" content="WhatsApp link generator" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta property="og:title" content="WA Link generator" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="" />
+    <meta property="og:image" content="" />
+
+    <!-- <link rel="manifest" href="site.webmanifest" /> -->
+    <link rel="apple-touch-icon" href="icon.png" />
+
+    <meta name="theme-color" content="#fafafa" />
+
+    <style>
+      * {
+        box-sizing: border-box;
+        font-family: "Open Sans", sans-serif;
+      }
+
+      .phoneNumber {
+        display: grid;
+        grid-template-columns: 100px 350px auto;
+        justify-content: center;
+        grid-gap: 12px;
+        margin: 2em;
+      }
+
+      #countryCode,
+      #numberInput {
+        padding: 0.5em 0.25em;
+        border: none;
+        border-radius: 0.2em;
+        font-size: 1.5em;
+        text-align: center;
+        box-shadow: 0 0 1em 0.25em rgba(0, 0, 0, 0.2);
+      }
+
+      #pasteButton {
+        background: url("./paste.svg") no-repeat center;
+        background-color: #ffffff;
+        background-size: 50%;
+        border-radius: 50%;
+        border: 0.5px #111;
+        padding: 15px;
+        margin: 10px;
+        width: 50px;
+        height: 50px;
+        box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      }
+
+      #pasteButton:hover {
+        background-color: #22baa7;
+      }
+
+      #link {
+        margin: 10px auto;
+        display: block;
+        text-align: center;
+        font-size: 1.5rem;
+      }
+    </style>
+  </head>
+
+  <body>
+    <section class="root">
+      <section class="phoneNumber">
+        <input type="tel" value="+91" id="countryCode" />
+        <input type="tel" class="input" id="numberInput" />
+        <button class="paste" id="pasteButton"></button>
+      </section>
+      <a href="https://wa.me/917418271862" id="link">7418271862</a>
+    </section>
+
+    <script>
+      (function () {
+        function changeLinkNumber() {
+          const LINK_PREFIX = "https://wa.me/";
+          const link = document.getElementById("link");
+          const countryCodeElement = document.getElementById("countryCode");
+          const phoneNumberElement = document.getElementById("numberInput");
+          const countryCode = countryCodeElement.value.substring(1);
+          const phoneNumber = phoneNumberElement.value.replace(/\s+/g, "");
+          const formattedNumber = `${LINK_PREFIX}${countryCode}${phoneNumber}`;
+          link.setAttribute("href", formattedNumber);
+          link.innerText = formattedNumber;
+        }
+
+        function setPhoneNumberAndCountrycode(countryCode, phoneNumber) {
+          console.log(countryCode, phoneNumber);
+          if (countryCode) {
+            const countryCodeElement = document.getElementById("countryCode");
+            countryCodeElement.value = countryCode;
+          }
+
+          const phoneNumberElement = document.getElementById("numberInput");
+          phoneNumberElement.value = phoneNumber.replace(/\s+/g, "");
+        }
+
+        const numberInput = document.getElementById("numberInput");
+        numberInput.addEventListener("input", () => {
+          changeLinkNumber();
+        });
+        numberInput.focus();
+
+        const pasteButton = document.getElementById("pasteButton");
+        pasteButton.addEventListener("click", async () => {
+          const text = await navigator.clipboard.readText();
+          if (text) {
+            const INDIA_CODE = "+91";
+            const SG_CODE = "+65";
+            const USA_CODE = "+1";
+            if (text.startsWith(INDIA_CODE)) {
+              setPhoneNumberAndCountrycode(
+                INDIA_CODE,
+                text.replace(INDIA_CODE, "")
+              );
+            } else if (text.startsWith(SG_CODE)) {
+              setPhoneNumberAndCountrycode(SG_CODE, text.replace(SG_CODE, ""));
+            } else if (text.startsWith(USA_CODE)) {
+              setPhoneNumberAndCountrycode(
+                USA_CODE,
+                text.replace(USA_CODE, "")
+              );
+            } else {
+              setPhoneNumberAndCountrycode(false, text);
+            }
+
+            changeLinkNumber();
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>
